@@ -44,7 +44,7 @@ function preload() {
 function create() {
     const bird = this.physics.add.image(
         225,
-        400,
+        100,
         "bird"
     );
 
