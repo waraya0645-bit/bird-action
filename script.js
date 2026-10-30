@@ -6,7 +6,7 @@ const config = {
     // ゲームを表示するHTML要素
     parent: "game",
 
-    backgroundColor: "#101a29",
+    backgroundColor: "#c0c0c0",
     // 画面に合わせて拡大・縮小する
     scale: {
         mode: Phaser.Scale.FIT,
