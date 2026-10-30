@@ -10,6 +10,17 @@ const config = {
 
     backgroundColor: "#c0c0c0",
 
+    // 物理エンジン
+    physics: {
+        default: "arcade",
+        arcade: {
+            gravity: {
+                y: 800
+            },
+            debug: false
+        }
+    },
+
     // 画面に合わせて拡大・縮小する
     scale: {
         mode: Phaser.Scale.FIT,
@@ -31,9 +42,12 @@ function preload() {
 
 // ゲーム開始時の処理
 function create() {
-    this.add.image(
+    const bird = this.physics.add.image(
         225,
         400,
         "bird"
-    ).setDisplaySize(100, 100);
+    );
+
+    bird.setDisplaySize(100, 100);
+    bird.setCollideWorldBounds(true);
 }
