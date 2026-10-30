@@ -7,7 +7,6 @@ const config = {
     parent: "game",
 
     backgroundColor: "#101a29",
-
     // 画面に合わせて拡大・縮小する
     scale: {
         mode: Phaser.Scale.FIT,
