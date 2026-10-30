@@ -1,6 +1,5 @@
 const config = {
-    type: Phaser.AUTO,
-
+    type: Phaser.AUTO
     // ゲーム画面のサイズ
     width: 450,
     height: 800,
