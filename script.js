@@ -3,7 +3,6 @@ const config = {
     // ゲーム画面のサイズ
     width: 450,
     height: 800,
-
     // ゲームを表示するHTML要素
     parent: "game",
 
