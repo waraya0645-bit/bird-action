@@ -42,12 +42,28 @@ function preload() {
 
 // ゲーム開始時の処理
 function create() {
-    const bird = this.physics.add.image(
+    this.bird = this.physics.add.image(
         225,
         100,
         "bird"
     );
 
-    bird.setDisplaySize(100, 100);
-    bird.setCollideWorldBounds(true);
+    this.bird.setDisplaySize(100, 100);
+
+    // 画面端との衝突を無効にする
+    this.bird.setCollideWorldBounds(false);
+
+    // タッチ操作
+    this.input.on("pointerdown", (pointer) => {
+
+        // 左半分をタップ
+        if (pointer.x < this.scale.width / 2) {
+            this.bird.setVelocity(-300, -500);
+        }
+
+        // 右半分をタップ
+        else {
+            this.bird.setVelocity(300, -500);
+        }
+    });
 }
