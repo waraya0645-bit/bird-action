@@ -53,6 +53,9 @@ function create() {
     // 画面端との衝突を無効にする
     this.bird.setCollideWorldBounds(false);
 
+    // カメラを鳥に横方向だけ追従させる
+    this.cameras.main.startFollow(this.bird, true, 1, 0);
+    
     // タッチ操作
     this.input.on("pointerdown", (pointer) => {
 
