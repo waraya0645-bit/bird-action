@@ -55,7 +55,9 @@ function create() {
 
     // カメラを鳥に横方向だけ追従させる
     this.cameras.main.startFollow(this.bird, true, 1, 0);
-    
+
+    // テスト用の障害物
+    this.add.rectangle(650, 400, 100, 250, 0x333333);
     // タッチ操作
     this.input.on("pointerdown", (pointer) => {
 
