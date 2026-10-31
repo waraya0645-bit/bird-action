@@ -1,14 +1,12 @@
 const config = {
     type: Phaser.AUTO,
-
     // ゲーム画面のサイズ
     width: 450,
     height: 800,
-
     // ゲームを表示するHTML要素
     parent: "game",
-
     backgroundColor: "#c0c0c0",
+    pixelArt: true,
 
     // 物理エンジン
     physics: {
@@ -49,15 +47,32 @@ function create() {
     );
 
     this.bird.setDisplaySize(100, 100);
-
     // 画面端との衝突を無効にする
     this.bird.setCollideWorldBounds(false);
-
     // カメラを鳥に横方向だけ追従させる
     this.cameras.main.startFollow(this.bird, true, 1, 0);
 
-    // テスト用の障害物
-    this.add.rectangle(650, 400, 100, 250, 0x333333);
+// テスト用の障害物
+const obstacle = this.add.rectangle(
+    650,
+    400,
+    100,
+    250,
+    0x333333
+);
+
+// 障害物に物理ボディを追加（固定）
+this.physics.add.existing(obstacle, true);
+
+// 鳥と障害物の接触を検出
+this.physics.add.overlap(this.bird, obstacle, () => {
+
+    // 障害物を赤色にする
+    obstacle.setFillStyle(0xff0000);
+
+    // 物理演算を停止する
+    this.physics.pause();
+});
     // タッチ操作
     this.input.on("pointerdown", (pointer) => {
 
