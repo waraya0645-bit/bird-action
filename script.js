@@ -72,6 +72,23 @@ this.physics.add.overlap(this.bird, obstacle, () => {
 
     // 物理演算を停止する
     this.physics.pause();
+        // GAME OVERを画面中央に表示
+    this.add.text(
+        this.scale.width / 2,
+        this.scale.height / 2,
+        "GAME OVER",
+        {
+            fontSize: "48px",
+            color: "#ffffff",
+            backgroundColor: "#000000",
+            padding: {
+                x: 12,
+                y: 8
+            }
+        }
+    )
+    .setOrigin(0.5)
+    .setScrollFactor(0);
 });
     // タッチ操作
     this.input.on("pointerdown", (pointer) => {
