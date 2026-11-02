@@ -52,6 +52,7 @@ function create() {
     // カメラを鳥に横方向だけ追従させる
     this.cameras.main.startFollow(this.bird, true, 1, 0);
 
+    this.gameOver = false;
 // テスト用の障害物
 const obstacle = this.add.rectangle(
     650,
@@ -72,6 +73,7 @@ this.physics.add.overlap(this.bird, obstacle, () => {
 
     // 物理演算を停止する
     this.physics.pause();
+    this.gameOver = true;
         // GAME OVERを画面中央に表示
     this.add.text(
         this.scale.width / 2,
@@ -92,6 +94,11 @@ this.physics.add.overlap(this.bird, obstacle, () => {
 });
     // タッチ操作
     this.input.on("pointerdown", (pointer) => {
+        // ゲームオーバーならステージを再開
+        if (this.gameOver) {
+            this.scene.restart();
+            return;
+        }
 
         // 左半分をタップ
         if (pointer.x < this.scale.width / 2) {
