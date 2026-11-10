@@ -53,6 +53,22 @@ function create() {
     this.cameras.main.startFollow(this.bird, true, 1, 0);
 
     this.gameOver = false;
+
+// スタート地点の地面
+const ground = this.add.rectangle(
+    225,
+    165,
+    450,
+    30,
+    0x555555
+);
+
+// 地面に固定の物理ボディを追加
+this.physics.add.existing(ground, true);
+
+// 鳥が地面に着地できるようにする
+this.physics.add.collider(this.bird, ground);
+    
 // テスト用の障害物
 const obstacle = this.add.rectangle(
     650,
