@@ -92,6 +92,7 @@ this.physics.add.overlap(this.bird, obstacle, () => {
     .setOrigin(0.5)
     .setScrollFactor(0);
 });
+    
 // タッチ操作
 this.input.on("pointerdown", () => {
 
@@ -104,4 +105,19 @@ this.input.on("pointerdown", () => {
     // 右上にジャンプ
     this.bird.setVelocity(300, -500);
 });
+
+// 指を離したとき
+const stopJump = () => {
+
+    // まだ上昇中ならジャンプを弱める
+    if (!this.gameOver && this.bird.body.velocity.y < 0) {
+        this.bird.setVelocityY(
+            this.bird.body.velocity.y * 0.45
+        );
+    }
+};
+
+// 指を離したことを検出
+this.input.on("pointerup", stopJump);
+this.input.on("pointerupoutside", stopJump);
 }
