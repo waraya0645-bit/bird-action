@@ -27,7 +27,8 @@ const config = {
 
     scene: {
         preload: preload,
-        create: create
+        create: create,
+        update: update
     }
 };
 
@@ -53,6 +54,8 @@ function create() {
     this.cameras.main.startFollow(this.bird, true, 1, 0);
 
     this.gameOver = false;
+
+    this.started = false;
 
 // スタート地点の地面
 const ground = this.add.rectangle(
@@ -118,8 +121,11 @@ this.input.on("pointerdown", () => {
         return;
     }
 
-    // 右上にジャンプ
-    this.bird.setVelocity(300, -500);
+    // 移動開始
+    this.started = true;
+
+    // 上方向にジャンプ
+    this.bird.setVelocityY(-500);
 });
 
 // 指を離したとき
@@ -136,4 +142,13 @@ const stopJump = () => {
 // 指を離したことを検出
 this.input.on("pointerup", stopJump);
 this.input.on("pointerupoutside", stopJump);
+}
+
+// 毎フレーム実行する処理
+function update() {
+
+    // ゲーム開始後は横移動速度を一定にする
+    if (this.started && !this.gameOver) {
+        this.bird.setVelocityX(300);
+    }
 }
