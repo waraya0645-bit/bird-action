@@ -151,4 +151,33 @@ function update() {
     if (this.started && !this.gameOver) {
         this.bird.setVelocityX(300);
     }
+    // 鳥が画面下端から完全に出たか確認
+    if (
+        !this.gameOver &&
+        this.bird.y > this.scale.height + this.bird.displayHeight / 2
+    ) {
+        // ゲームオーバーにする
+        this.gameOver = true;
+
+        // 物理演算を停止
+        this.physics.pause();
+
+        // GAME OVERを画面中央に表示
+        this.add.text(
+            this.scale.width / 2,
+            this.scale.height / 2,
+            "GAME OVER",
+            {
+                fontSize: "48px",
+                color: "#ffffff",
+                backgroundColor: "#000000",
+                padding: {
+                    x: 12,
+                    y: 8
+                }
+            }
+        )
+        .setOrigin(0.5)
+        .setScrollFactor(0);
+    }
 }
