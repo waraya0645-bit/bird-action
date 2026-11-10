@@ -46,7 +46,7 @@ function create() {
         "bird"
     );
 
-    this.bird.setDisplaySize(100, 100);
+    this.bird.setScale(2);
     // 画面端との衝突を無効にする
     this.bird.setCollideWorldBounds(false);
     // カメラを鳥に横方向だけ追従させる
