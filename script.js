@@ -92,22 +92,16 @@ this.physics.add.overlap(this.bird, obstacle, () => {
     .setOrigin(0.5)
     .setScrollFactor(0);
 });
-    // タッチ操作
-    this.input.on("pointerdown", (pointer) => {
-        // ゲームオーバーならステージを再開
-        if (this.gameOver) {
-            this.scene.restart();
-            return;
-        }
+// タッチ操作
+this.input.on("pointerdown", () => {
 
-        // 左半分をタップ
-        if (pointer.x < this.scale.width / 2) {
-            this.bird.setVelocity(-300, -500);
-        }
+    // ゲームオーバーならステージを再開
+    if (this.gameOver) {
+        this.scene.restart();
+        return;
+    }
 
-        // 右半分をタップ
-        else {
-            this.bird.setVelocity(300, -500);
-        }
-    });
+    // 右上にジャンプ
+    this.bird.setVelocity(300, -500);
+});
 }
