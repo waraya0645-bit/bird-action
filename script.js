@@ -108,9 +108,18 @@ this.input.on("pointerupoutside", stopJump);
 // 毎フレーム実行する処理
 function update() {
 
-    // ゲーム開始後は横移動速度を一定にする
+    // ゲーム開始後の横移動
     if (this.started && !this.gameOver) {
-        this.bird.setVelocityX(300);
+
+        // 右側の壁に接触していたら横移動を止める
+        if (
+            this.bird.body.blocked.right ||
+            this.bird.body.touching.right
+        ) {
+            this.bird.setVelocityX(0);
+        } else {
+            this.bird.setVelocityX(300);
+        }
     }
     // 鳥が画面下端から完全に出たか確認
     if (
