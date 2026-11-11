@@ -37,6 +37,7 @@ const game = new Phaser.Game(config);
 // 画像の読み込み
 function preload() {
     this.load.image("bird", "images/bird.png");
+    this.load.image("gray_block", "images/gray_block.png");
 }
 
 // ゲーム開始時の処理
