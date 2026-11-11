@@ -50,7 +50,7 @@ function create() {
 
     this.bird.setScale(2);
     // 当たり判定を64x64ピクセルにする
-this.bird.body.setSize(32, 32);
+this.bird.body.setSize(31, 32);
     // 画面端との衝突を無効にする
     this.bird.setCollideWorldBounds(false);
     // カメラを鳥に横方向だけ追従させる
