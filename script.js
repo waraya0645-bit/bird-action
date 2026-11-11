@@ -57,6 +57,10 @@ function create() {
 
     this.started = false;
 
+    // スタミナ
+this.maxStamina = 100;
+this.stamina = 100;
+
 // スタート地点の地面
 const ground = this.add.rectangle(
     225,
@@ -120,6 +124,14 @@ this.input.on("pointerdown", () => {
         this.scene.restart();
         return;
     }
+
+        // スタミナが足りなければジャンプしない
+    if (this.stamina < 10) {
+        return;
+    }
+
+    // スタミナを10消費
+    this.stamina -= 10;
 
     // 移動開始
     this.started = true;
