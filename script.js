@@ -62,60 +62,8 @@ function create() {
 this.maxStamina = 100;
 this.stamina = 100;
 
-// スタート地点の地面
-const ground = this.add.rectangle(
-    225,
-    165,
-    450,
-    30,
-    0x555555
-);
-
-// 地面に固定の物理ボディを追加
-this.physics.add.existing(ground, true);
-
-// 鳥が地面に着地できるようにする
-this.physics.add.collider(this.bird, ground);
-    
-// テスト用の障害物
-const obstacle = this.add.rectangle(
-    650,
-    400,
-    100,
-    250,
-    0x333333
-);
-
-// 障害物に物理ボディを追加（固定）
-this.physics.add.existing(obstacle, true);
-
-// 鳥と障害物の接触を検出
-this.physics.add.overlap(this.bird, obstacle, () => {
-
-    // 障害物を赤色にする
-    obstacle.setFillStyle(0xff0000);
-
-    // 物理演算を停止する
-    this.physics.pause();
-    this.gameOver = true;
-        // GAME OVERを画面中央に表示
-    this.add.text(
-        this.scale.width / 2,
-        this.scale.height / 2,
-        "GAME OVER",
-        {
-            fontSize: "48px",
-            color: "#ffffff",
-            backgroundColor: "#000000",
-            padding: {
-                x: 12,
-                y: 8
-            }
-        }
-    )
-    .setOrigin(0.5)
-    .setScrollFactor(0);
-});
+// マップを描画（1マス64×64）
+drawMap(this, 64);
     
 // タッチ操作
 this.input.on("pointerdown", () => {
