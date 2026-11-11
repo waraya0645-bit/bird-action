@@ -64,3 +64,55 @@ function drawMap(scene, tileSize) {
         Math.max(mapHeight, scene.scale.height)
     );
 }
+// ================================
+// 右側の壁を確認
+// ================================
+
+function isWallAhead(scene, delta) {
+
+    const body = scene.bird.body;
+    const tileSize = scene.tileSize;
+
+    // 次のフレームで進む位置を予測
+    const nextRight =
+        body.right + 300 * delta / 1000 + 1;
+
+    // 調べるマスの範囲
+    const firstColumn = Math.floor(
+        (body.right + 1) / tileSize
+    );
+
+    const lastColumn = Math.floor(
+        nextRight / tileSize
+    );
+
+    const firstRow = Math.floor(
+        body.top / tileSize
+    );
+
+    const lastRow = Math.floor(
+        (body.bottom - 1) / tileSize
+    );
+
+    // 鳥の右側にあるマスを調べる
+    for (let x = firstColumn; x <= lastColumn; x++) {
+        for (let y = firstRow; y <= lastRow; y++) {
+
+            const row = mapData[y];
+
+            if (!row) continue;
+
+            const tileNumber = row[x];
+
+            // 0以外で画像が登録されているマスは壁
+            if (
+                tileNumber !== 0 &&
+                tileImageKeys[tileNumber]
+            ) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
