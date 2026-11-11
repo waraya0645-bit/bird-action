@@ -3,6 +3,7 @@
 // ================================
 
 function drawMap(scene, tileSize) {
+    scene.tileSize = tileSize;
 
     // タイルをまとめる物理グループ
     scene.mapTiles = scene.physics.add.staticGroup();
