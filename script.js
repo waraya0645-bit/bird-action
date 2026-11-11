@@ -66,7 +66,6 @@ this.stamina = 100;
 
 // マップを描画（1マス64×64）
 drawMap(this, 64);
-scene.tileSize = tileSize;
     
 // タッチ操作
 this.input.on("pointerdown", () => {
