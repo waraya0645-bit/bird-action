@@ -38,6 +38,8 @@ function drawMap(scene, tileSize) {
 
             // 当たり判定の大きさを更新
             tile.refreshBody();
+            // タイルの左側面の通常衝突を無効にする
+            tile.body.checkCollision.left = false;
 
             // 鳥より後ろに表示
             tile.setDepth(-1);
