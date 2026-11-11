@@ -66,6 +66,7 @@ this.stamina = 100;
 
 // マップを描画（1マス64×64）
 drawMap(this, 64);
+scene.tileSize = tileSize;
     
 // タッチ操作
 this.input.on("pointerdown", () => {
@@ -108,16 +109,13 @@ this.input.on("pointerupoutside", stopJump);
 }
 
 // 毎フレーム実行する処理
-function update() {
+function update(time, delta) {
 
     // ゲーム開始後の横移動
     if (this.started && !this.gameOver) {
 
-        // 右側の壁に接触していたら横移動を止める
-        if (
-            this.bird.body.blocked.right ||
-            this.bird.body.touching.right
-        ) {
+        // 右側に壁があれば停止
+        if (isWallAhead(this, delta)) {
             this.bird.setVelocityX(0);
         } else {
             this.bird.setVelocityX(300);
