@@ -8,11 +8,11 @@ function drawMap(scene, tileSize) {
     // タイルをまとめる物理グループ
     scene.mapTiles = scene.physics.add.staticGroup();
 
-    // マップデータを上から順番に読み込む
-    for (let y = 0; y < mapData.length; y++) {
-        for (let x = 0; x < mapData[y].length; x++) {
+    // 生成後のマップデータを上から順番に読み込む
+    for (let y = 0; y < scene.mapData.length; y++) {
+        for (let x = 0; x < scene.mapData[y].length; x++) {
 
-            const tileNumber = mapData[y][x];
+            const tileNumber = scene.mapData[y][x];
 
             // 0は空白
             if (tileNumber === 0) {
@@ -39,7 +39,9 @@ function drawMap(scene, tileSize) {
 
             // 当たり判定の大きさを更新
             tile.refreshBody();
+
             // タイルの左側面の通常衝突を無効にする
+            // 右側の衝突は isWallAhead() で判定する
             tile.body.checkCollision.left = false;
 
             // 鳥より後ろに表示
@@ -47,15 +49,19 @@ function drawMap(scene, tileSize) {
         }
     }
 
-    // 鳥とマップの衝突判定
+    // 鳥とマップの上面・下面などの衝突判定
     scene.physics.add.collider(scene.bird, scene.mapTiles);
 
-    // マップ全体の大きさ
+    // 生成後のマップ全体の大きさ
     const mapWidth = Math.max(
-        ...mapData.map(row => row.length)
+        ...scene.mapData.map(row => row.length)
     ) * tileSize;
 
-    const mapHeight = mapData.length * tileSize;
+    const mapHeight = scene.mapData.length * tileSize;
+
+    // マップの幅を保存
+    scene.mapWidth = mapWidth;
+    scene.mapHeight = mapHeight;
 
     // カメラの移動範囲
     scene.cameras.main.setBounds(
@@ -65,6 +71,7 @@ function drawMap(scene, tileSize) {
         Math.max(mapHeight, scene.scale.height)
     );
 }
+
 // ================================
 // 右側の壁を確認
 // ================================
@@ -95,17 +102,17 @@ function isWallAhead(scene, delta) {
         (body.bottom - 1) / tileSize
     );
 
-    // 鳥の右側にあるマスを調べる
+    // 生成後のマップデータを調べる
     for (let x = firstColumn; x <= lastColumn; x++) {
         for (let y = firstRow; y <= lastRow; y++) {
 
-            const row = mapData[y];
+            const row = scene.mapData[y];
 
             if (!row) continue;
 
             const tileNumber = row[x];
 
-            // 0以外で画像が登録されているマスは壁
+            // 画像が登録されているタイルなら壁
             if (
                 tileNumber !== 0 &&
                 tileImageKeys[tileNumber]
