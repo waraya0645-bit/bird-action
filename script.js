@@ -49,62 +49,66 @@ function create() {
     );
 
     this.bird.setScale(2);
-    // 当たり判定を64x64ピクセルにする
-this.bird.body.setSize(30, 32);
+    // 鳥の当たり判定
+    this.bird.body.setSize(30, 32);
+
     // 画面端との衝突を無効にする
     this.bird.setCollideWorldBounds(false);
+
     // カメラを鳥に横方向だけ追従させる
     this.cameras.main.startFollow(this.bird, true, 1, 0);
 
     this.gameOver = false;
-
     this.started = false;
 
     // スタミナ
-this.maxStamina = 100;
-this.stamina = 100;
+    this.maxStamina = 100;
+    this.stamina = 100;
 
-// マップを描画（1マス64×64）
-drawMap(this, 64);
-    
-// タッチ操作
-this.input.on("pointerdown", () => {
+    // 手作りマップの右側に壁を自動生成
+    this.mapData = generateWallMap(mapData, 8);
 
-    // ゲームオーバーならステージを再開
-    if (this.gameOver) {
-        this.scene.restart();
-        return;
-    }
+    // 生成したマップを描画（1マス64×64）
+    drawMap(this, 64);
+
+    // タッチ操作
+    this.input.on("pointerdown", () => {
+
+        // ゲームオーバーならステージを再開
+        if (this.gameOver) {
+            this.scene.restart();
+            return;
+        }
 
         // スタミナが足りなければジャンプしない
-    if (this.stamina < 10) {
-        return;
-    }
+        if (this.stamina < 10) {
+            return;
+        }
 
-    // スタミナを10消費
-    this.stamina -= 10;
+        // スタミナを10消費
+        this.stamina -= 10;
 
-    // 移動開始
-    this.started = true;
+        // 移動開始
+        this.started = true;
 
-    // 上方向にジャンプ
-    this.bird.setVelocityY(-500);
-});
+        // 上方向にジャンプ
+        this.bird.setVelocityY(-500);
+    });
 
-// 指を離したとき
-const stopJump = () => {
+    // 指を離したとき
+    const stopJump = () => {
 
-    // まだ上昇中ならジャンプを弱める
-    if (!this.gameOver && this.bird.body.velocity.y < 0) {
-        this.bird.setVelocityY(
-            this.bird.body.velocity.y * 0.45
-        );
-    }
-};
+        // まだ上昇中ならジャンプを弱める
+        if (!this.gameOver && this.bird.body.velocity.y < 0) {
+            this.bird.setVelocityY(
+                this.bird.body.velocity.y * 0.45
+            );
+        }
+    };
 
-// 指を離したことを検出
-this.input.on("pointerup", stopJump);
-this.input.on("pointerupoutside", stopJump);
+    // 指を離したことを検出
+    this.input.on("pointerup", stopJump);
+    this.input.on("pointerupoutside", stopJump);
 }
 
 // 毎フレーム実行する処理
@@ -120,6 +124,7 @@ function update(time, delta) {
             this.bird.setVelocityX(300);
         }
     }
+
     // 鳥が画面下端から完全に出たか確認
     if (
         !this.gameOver &&
