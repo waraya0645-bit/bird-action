@@ -123,7 +123,7 @@ function update(time, delta) {
     // 鳥が画面下端から完全に出たか確認
     if (
         !this.gameOver &&
-        this.bird.y > this.scale.height + this.bird.displayHeight / 2 + 128
+        this.bird.y > this.scale.height + this.bird.displayHeight / 2 + 64
     ) {
         // ゲームオーバーにする
         this.gameOver = true;
